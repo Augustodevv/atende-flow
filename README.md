@@ -1,42 +1,56 @@
 # AtendeFlow
 
-Aplicação para organizar oportunidades comerciais de pequenos negócios. O usuário cadastra contatos, acompanha o estágio de cada negociação, define o próximo passo e visualiza indicadores do pipeline.
+Aplicação Full-Stack para organizar contatos, oportunidades e próximos passos de pequenos negócios.
 
-## O que demonstra
+## Problema
 
-- Interface responsiva com busca, filtro e formulários acessíveis.
-- API HTTP em Node.js para criar, consultar, editar e excluir oportunidades.
-- Persistência em SQLite e consultas parametrizadas.
-- Validação de dados no servidor e tratamento de erros na interface.
-- Indicadores de contatos, valor em aberto, negócios fechados e conversão.
+Conversas comerciais espalhadas em mensagens e anotações tornam fácil esquecer retornos e perder a visão das propostas em andamento. O AtendeFlow reúne essas informações em um painel simples, executado localmente e sem serviços externos.
 
-O projeto usa **Node.js 24 ou superior**. Não requer instalação de pacotes nem conexão com serviços externos.
+## Funcionalidades
 
-## Executar
+- Cadastro, consulta, edição e exclusão de oportunidades.
+- Busca por nome, empresa ou serviço.
+- Filtro por etapa da negociação.
+- Próxima ação e data de acompanhamento.
+- Indicadores de contatos, valor em aberto e negócios fechados.
+- Validação de campos no servidor e mensagens de erro na interface.
+- Interface responsiva e formulários acessíveis.
+- Persistência local em SQLite.
+
+## Tecnologias
+
+- HTML5, CSS e JavaScript.
+- Node.js 24 com servidor HTTP nativo.
+- SQLite por meio do módulo `node:sqlite`.
+- Node Test Runner para testes automatizados.
+
+O projeto não depende de pacotes de terceiros.
+
+## Como executar
+
+Requisito: Node.js 24 ou superior.
 
 ```bash
 npm start
 ```
 
-Abra `http://localhost:3000`. Na primeira execução, o aplicativo inclui quatro contatos fictícios para demonstração. Os dados ficam no arquivo `data/atendeflow.sqlite`; a pasta `data/` não deve ser enviada ao GitHub.
+Abra `http://localhost:3000`. Na primeira execução, o aplicativo cria dados fictícios para demonstrar o fluxo. A base local fica em `data/atendeflow.sqlite` e não deve ser enviada ao GitHub.
 
-Para testar:
+## Testes
 
 ```bash
 npm test
 ```
 
-## Fluxo para apresentar em entrevista
+## Fluxo de demonstração
 
-1. Mostre os indicadores do painel e explique o problema: perder o acompanhamento de contatos e propostas.
-2. Cadastre uma nova oportunidade, informe serviço, valor e próximo passo.
-3. Filtre por etapa, edite a oportunidade e marque-a como fechada.
-4. Mostre a atualização dos indicadores e explique como a interface consulta a API e grava os dados no SQLite.
+1. Observe os indicadores do painel.
+2. Cadastre uma oportunidade com serviço, valor e próximo passo.
+3. Filtre por etapa e edite o registro.
+4. Marque a oportunidade como fechada e confira a atualização dos indicadores.
 
-## Stack
+## Estado do projeto
 
-HTML, CSS, JavaScript, Node.js e SQLite. A aplicação é intencionalmente independente de bibliotecas externas para deixar visível a implementação da interface, da API e da persistência.
+Projeto funcional de estudo e portfólio. Os contatos incluídos inicialmente são dados fictícios e servem apenas para demonstração local.
 
-## Descrição sugerida para o LinkedIn
 
-**AtendeFlow — painel de oportunidades para pequenos negócios.** Desenvolvi uma aplicação Full-Stack para registrar contatos, acompanhar propostas e organizar próximos passos. Implementei uma interface responsiva, uma API em Node.js e persistência em SQLite. O projeto demonstra operações de cadastro, edição, busca, filtros, validação e indicadores de negociação.
