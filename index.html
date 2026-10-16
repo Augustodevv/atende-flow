@@ -10,11 +10,11 @@
 <body>
   <div class="app-shell">
     <aside class="sidebar">
-      <div class="brand"><span class="brand-icon">◆</span><span>atende<span class="brand-light">flow</span></span></div>
-      <div class="workspace-label">ESPAÇO DE TRABALHO</div>
+      <div class="brand"><svg class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 16V5h7v6h11v8H10v-3Z" fill="currentColor"/></svg><span>atende<span class="brand-light">flow</span></span></div>
+      <div class="workspace-label">Demonstração interativa</div>
       <nav aria-label="Navegação principal">
-        <a class="nav-item active" href="#dashboard"><span>▦</span> Visão geral</a>
-        <a class="nav-item" href="#pipeline"><span>◫</span> Oportunidades</a>
+        <a class="nav-item active" href="#dashboard"> Visão geral</a>
+        <a class="nav-item" href="#pipeline"> Oportunidades</a>
       </nav>
       <div class="sidebar-bottom">
         <div class="avatar">AN</div>
@@ -24,22 +24,22 @@
 
     <main id="dashboard">
       <header class="topbar">
-        <div><span class="eyebrow">PAINEL DE OPORTUNIDADES</span><h1>Seu negócio, em movimento.</h1><p>Acompanhe cada conversa, proposta e próximo passo em um só lugar.</p></div>
-        <button id="newButton" class="primary-button"><span>＋</span> Nova oportunidade</button>
+        <div><h1>Seu negócio, em movimento.</h1><p>Acompanhe cada conversa, proposta e próximo passo em um só lugar.</p></div>
+        <button id="newButton" class="primary-button"><span aria-hidden="true">+</span> Nova oportunidade</button>
       </header>
 
       <section class="metrics" aria-label="Indicadores">
-        <article class="metric"><div class="metric-top"><span>Total de contatos</span><span class="metric-icon blue">◎</span></div><strong id="metricTotal">—</strong><small>no seu pipeline</small></article>
-        <article class="metric"><div class="metric-top"><span>Em negociação</span><span class="metric-icon orange">↗</span></div><strong id="metricOpen">—</strong><small>em oportunidades abertas</small></article>
-        <article class="metric"><div class="metric-top"><span>Negócios fechados</span><span class="metric-icon green">✓</span></div><strong id="metricClosed">—</strong><small>em valor conquistado</small></article>
-        <article class="metric"><div class="metric-top"><span>Taxa de conversão</span><span class="metric-icon purple">◈</span></div><strong id="metricRate">—</strong><small>dos contatos cadastrados</small></article>
+        <article class="metric"><div class="metric-top"><span>Total de contatos</span></div><strong id="metricTotal">—</strong><small>no seu pipeline</small></article>
+        <article class="metric"><div class="metric-top"><span>Em negociação</span></div><strong id="metricOpen">—</strong><small>em oportunidades abertas</small></article>
+        <article class="metric"><div class="metric-top"><span>Negócios fechados</span></div><strong id="metricClosed">—</strong><small>em valor conquistado</small></article>
+        <article class="metric"><div class="metric-top"><span>Taxa de conversão</span></div><strong id="metricRate">—</strong><small>dos contatos cadastrados</small></article>
       </section>
 
       <section class="panel" id="pipeline">
-        <div class="panel-heading"><div><span class="eyebrow">GESTÃO EM TEMPO REAL</span><h2>Oportunidades</h2><p>Organize seu fluxo comercial com clareza.</p></div><span id="resultCount" class="count-pill">— contatos</span></div>
-        <div class="filters"><label class="search"><span>⌕</span><input id="searchInput" type="search" placeholder="Buscar por nome, empresa ou serviço" aria-label="Buscar oportunidades"></label><label class="select-wrap"><span>Etapa</span><select id="statusFilter" aria-label="Filtrar por etapa"><option value="">Todas as etapas</option><option>Novo</option><option>Em conversa</option><option>Proposta enviada</option><option>Fechado</option></select></label></div>
-        <div class="table-wrap"><table><thead><tr><th>CONTATO</th><th>SERVIÇO</th><th>VALOR</th><th>ETAPA</th><th>PRÓXIMA AÇÃO</th><th>VENCIMENTO</th><th><span class="sr-only">Ações</span></th></tr></thead><tbody id="leadRows"></tbody></table></div>
-        <div id="emptyState" class="empty" hidden><div>◇</div><strong>Nenhuma oportunidade encontrada</strong><p>Ajuste os filtros ou cadastre um novo contato.</p></div>
+        <div class="panel-heading"><div><h2>Oportunidades</h2><p>Organize seu fluxo comercial com clareza.</p></div><span id="resultCount" class="count-pill" aria-live="polite">— contatos</span></div>
+        <div class="filters"><label class="search"><input id="searchInput" type="search" placeholder="Buscar por nome, empresa ou serviço" aria-label="Buscar oportunidades"></label><label class="select-wrap"><span>Etapa</span><select id="statusFilter" aria-label="Filtrar por etapa"><option value="">Todas as etapas</option><option>Novo</option><option>Em conversa</option><option>Proposta enviada</option><option>Fechado</option></select></label></div>
+        <p id="loadStatus" class="load-status" role="status" hidden></p><div class="table-wrap"><table><thead><tr><th>CONTATO</th><th>SERVIÇO</th><th>VALOR</th><th>ETAPA</th><th>PRÓXIMA AÇÃO</th><th>VENCIMENTO</th><th><span class="sr-only">Ações</span></th></tr></thead><tbody id="leadRows"></tbody></table></div>
+        <div id="emptyState" class="empty" hidden><strong>Nenhuma oportunidade encontrada</strong><p>Ajuste os filtros ou cadastre um novo contato.</p></div>
       </section>
       <footer>AtendeFlow · Projeto de portfólio de Augusto Novaes · Dados de demonstração locais</footer>
     </main>
@@ -47,7 +47,7 @@
 
   <dialog id="leadDialog" aria-labelledby="dialogTitle">
     <form id="leadForm">
-      <div class="dialog-head"><div><span class="eyebrow">OPORTUNIDADE</span><h2 id="dialogTitle">Novo contato</h2></div><button type="button" id="closeDialog" class="icon-button" aria-label="Fechar">×</button></div>
+      <div class="dialog-head"><div><h2 id="dialogTitle">Novo contato</h2></div><button type="button" id="closeDialog" class="icon-button" aria-label="Fechar">×</button></div>
       <div class="form-grid"><label>Nome do contato <input name="name" required maxlength="160" placeholder="Ex.: Ana Souza"></label><label>Empresa <input name="company" required maxlength="160" placeholder="Ex.: Studio Aurora"></label><label>E-mail <input name="email" type="email" maxlength="160" placeholder="ana@empresa.com"></label><label>Serviço <input name="service" required maxlength="160" placeholder="Ex.: Site institucional"></label><label>Valor estimado (R$) <input name="value" type="number" min="0" step="0.01" value="0"></label><label>Etapa <select name="status"><option>Novo</option><option>Em conversa</option><option>Proposta enviada</option><option>Fechado</option></select></label><label class="span-2">Próxima ação <input name="next_action" maxlength="160" placeholder="Ex.: Enviar proposta até sexta-feira"></label><label>Data do próximo passo <input name="due_date" type="date"></label></div>
       <p id="formError" class="error" role="alert" hidden></p>
       <div class="dialog-actions"><button type="button" id="cancelButton" class="secondary-button">Cancelar</button><button class="primary-button" type="submit">Salvar oportunidade</button></div>
