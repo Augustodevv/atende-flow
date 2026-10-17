@@ -4,7 +4,7 @@ Aplicação Full-Stack para organizar contatos, oportunidades e próximos passos
 
 ## Problema
 
-Conversas comerciais espalhadas em mensagens e anotações tornam fácil esquecer retornos e perder a visão das propostas em andamento. O AtendeFlow reúne essas informações em um painel simples, executado localmente e sem serviços externos.
+Conversas comerciais espalhadas em mensagens e anotações tornam fácil esquecer retornos e perder a visão das propostas em andamento. O AtendeFlow reúne essas informações em um painel simples, executado localmente. O uso de IA é opcional e, sem ela, o painel não depende de nenhum serviço externo.
 
 ## Funcionalidades
 
@@ -16,6 +16,7 @@ Conversas comerciais espalhadas em mensagens e anotações tornam fácil esquece
 - Validação de campos no servidor e mensagens de erro na interface.
 - Interface responsiva e formulários acessíveis.
 - Persistência local em SQLite.
+- **Sugestão de próximo passo**: botão "Sugerir" em cada oportunidade, com IA (opcional) ou regras locais.
 
 ## Tecnologias
 
@@ -25,6 +26,19 @@ Conversas comerciais espalhadas em mensagens e anotações tornam fácil esquece
 - Node Test Runner para testes automatizados.
 
 O projeto não depende de pacotes de terceiros.
+
+## Sugestão de próximo passo com IA (opcional)
+
+O botão **Sugerir** mostra uma orientação curta para cada oportunidade.
+
+- **Sem configuração:** usa regras locais, como prazo vencido, etapa da negociação e proposta sem resposta.
+- **Com `ANTHROPIC_API_KEY`:** envia os dados de negócio à API da Anthropic (modelo `claude-haiku-5-5` por padrão) e mostra a resposta. Se a chamada falhar, o painel volta para as regras locais.
+
+```bash
+ANTHROPIC_API_KEY=sua-chave npm start
+```
+
+A chave fica só na variável de ambiente e nunca vai para o código. Para a IA, são enviados apenas serviço, etapa, valor, próxima ação e data. **Nome, empresa e e-mail do contato não são enviados.** A resposta é limitada a 400 caracteres e exibida como texto simples.
 
 ## Como executar
 
@@ -41,6 +55,8 @@ Abra `http://localhost:3000`. Na primeira execução, o aplicativo cria dados fi
 ```bash
 npm test
 ```
+
+Os testes da sugestão usam uma função `fetch` simulada, sem rede e sem chave.
 
 ## Fluxo de demonstração
 

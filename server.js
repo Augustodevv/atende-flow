@@ -2,6 +2,7 @@ const http = require('node:http');
 const fs = require('node:fs');
 const path = require('node:path');
 const { DatabaseSync } = require('node:sqlite');
+const { suggest } = require('./suggest');
 
 const root = __dirname;
 const dataDir = process.env.DATA_DIR || path.join(root, 'data');
@@ -94,6 +95,12 @@ async function handler(req, res) {
       const result = db.prepare('INSERT INTO leads (name, company, email, service, value, status, next_action, due_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)')
         .run(lead.name, lead.company, lead.email, lead.service, lead.value, lead.status, lead.nextAction, lead.dueDate);
       return json(res, 201, db.prepare('SELECT * FROM leads WHERE id = ?').get(result.lastInsertRowid));
+    }
+    const hint = url.pathname.match(/^\/api\/leads\/(\d+)\/suggestion$/);
+    if (hint && req.method === 'GET') {
+      const lead = db.prepare('SELECT * FROM leads WHERE id = ?').get(Number(hint[1]));
+      if (!lead) return json(res, 404, { error: 'Contato não encontrado.' });
+      return json(res, 200, await suggest(lead));
     }
     const match = url.pathname.match(/^\/api\/leads\/(\d+)$/);
     if (match && req.method === 'PUT') {
