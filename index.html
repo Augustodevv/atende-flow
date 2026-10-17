@@ -53,6 +53,14 @@
       <div class="dialog-actions"><button type="button" id="cancelButton" class="secondary-button">Cancelar</button><button class="primary-button" type="submit">Salvar oportunidade</button></div>
     </form>
   </dialog>
+  <dialog id="suggestionDialog" aria-labelledby="suggestionTitle">
+    <div class="suggestion-box">
+      <div class="dialog-head"><div><h2 id="suggestionTitle">Próximo passo</h2></div></div>
+      <p id="suggestionText" role="status"></p>
+      <small id="suggestionSource"></small>
+      <div class="dialog-actions"><button type="button" id="closeSuggestion" class="secondary-button">Fechar</button></div>
+    </div>
+  </dialog>
   <script src="/app.js" defer></script>
 </body>
 </html>

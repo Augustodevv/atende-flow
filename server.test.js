@@ -7,7 +7,7 @@ const path = require('node:path');
 test('fluxo de oportunidade: criar, consultar, filtrar, editar e excluir', async () => {
   const scratch = require('node:os').tmpdir();
   const dir = fs.mkdtempSync(path.join(scratch, 'atendeflow-test-'));
-  const child = spawn(process.execPath, [path.join(__dirname, 'server.js')], { env: { ...process.env, DATA_DIR: dir, PORT: '0' }, stdio: ['ignore', 'pipe', 'pipe'] });
+  const child = spawn(process.execPath, [path.join(__dirname, 'server.js')], { env: { ...process.env, DATA_DIR: dir, PORT: '0', ANTHROPIC_API_KEY: '' }, stdio: ['ignore', 'pipe', 'pipe'] });
   let stderr = '';
   child.stderr.on('data', c => { stderr += c; });
   try {
@@ -33,6 +33,11 @@ test('fluxo de oportunidade: criar, consultar, filtrar, editar e excluir', async
     const stats = await request('/api/stats');
     assert.equal(stats.body.total, 5);
     assert.equal(stats.body.byStatus.Fechado, 2);
+    const hint = await request(`/api/leads/${id}/suggestion`);
+    assert.equal(hint.status, 200);
+    assert.equal(hint.body.source, 'rules');
+    assert.ok(hint.body.text.length > 0);
+    assert.equal((await request('/api/leads/99999/suggestion')).status, 404);
     const invalid = await request('/api/leads', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ name: 'X', company: 'Y', service: 'Z', status: 'Inválido' }) });
     assert.equal(invalid.status, 400);
     const deleted = await request(`/api/leads/${id}`, { method: 'DELETE' });

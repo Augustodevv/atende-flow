@@ -39,8 +39,9 @@ function renderRows() {
     const actions = document.createElement('td');
     const group = document.createElement('div'); group.className = 'row-actions';
     const edit = document.createElement('button'); edit.type = 'button'; edit.className = 'icon-button'; edit.textContent = 'Editar'; edit.setAttribute('aria-label', `Editar ${lead.name}`); edit.addEventListener('click', () => openDialog(lead));
+    const hint = document.createElement('button'); hint.type = 'button'; hint.className = 'icon-button suggest'; hint.textContent = 'Sugerir'; hint.setAttribute('aria-label', `Sugerir próximo passo para ${lead.name}`); hint.addEventListener('click', () => showSuggestion(lead, hint));
     const remove = document.createElement('button'); remove.type = 'button'; remove.className = 'icon-button delete'; remove.textContent = 'Excluir'; remove.setAttribute('aria-label', `Excluir ${lead.name}`); remove.addEventListener('click', () => deleteLead(lead));
-    group.append(edit, remove); actions.append(group); tr.append(actions); tbody.append(tr);
+    group.append(hint, edit, remove); actions.append(group); tr.append(actions); tbody.append(tr);
     ['Contato', 'Serviço', 'Valor', 'Etapa', 'Próxima ação', 'Vencimento', 'Ações'].forEach((label, index) => tr.children[index].dataset.label = label);
   }
 }
@@ -80,6 +81,22 @@ function openDialog(lead = null) {
   $('leadForm').elements.name.focus();
 }
 
+async function showSuggestion(lead, trigger) {
+  const text = $('suggestionText');
+  const source = $('suggestionSource');
+  $('suggestionTitle').textContent = `Próximo passo: ${lead.name}`;
+  text.textContent = 'Pensando…';
+  source.textContent = '';
+  $('suggestionDialog').showModal();
+  trigger.disabled = true;
+  try {
+    const result = await api(`/api/leads/${lead.id}/suggestion`);
+    text.textContent = result.text;
+    source.textContent = result.source === 'ai' ? 'Sugestão gerada por IA.' : 'Sugestão baseada em regras locais.';
+  } catch (error) { text.textContent = error.message; }
+  finally { trigger.disabled = false; }
+}
+
 async function deleteLead(lead) {
   if (!confirm(`Excluir a oportunidade de ${lead.name}?`)) return;
   try { await api(`/api/leads/${lead.id}`, { method: 'DELETE' }); await refresh(); }
@@ -89,6 +106,7 @@ async function deleteLead(lead) {
 $('newButton').addEventListener('click', () => openDialog());
 $('closeDialog').addEventListener('click', () => $('leadDialog').close());
 $('cancelButton').addEventListener('click', () => $('leadDialog').close());
+$('closeSuggestion').addEventListener('click', () => $('suggestionDialog').close());
 $('leadForm').addEventListener('submit', async event => {
   event.preventDefault();
   const form = new FormData(event.currentTarget);
